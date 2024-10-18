@@ -1,0 +1,10 @@
+
+apply from: "$buildGradlePath/build-demo.gradle"
+
+
+dependencies {
+
+    implementation project(":span")
+
+    implementation 'me.reezy.cosmo:tabs:0.8.0'
+}

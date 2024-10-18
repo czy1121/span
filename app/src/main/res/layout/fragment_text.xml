@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:padding="20dp"
+    android:layout_weight="1"
+    android:background="@android:color/black"
+    android:includeFontPadding="false"
+    android:text="Hello World!"
+    android:textColor="@android:color/white"
+    tools:context="com.demo.app.MainActivity" />
