@@ -32,9 +32,10 @@ class TextStrokeSpan(
 
         canvas.drawText(text, start, end, x + strokeWidth, y.toFloat(), paint)
 
-        paint.getTextPath(text.toString(), start, end, x + strokeWidth, y.toFloat(), path)
-
-        canvas.drawStroke(strokeWidth.toFloat(), strokeColor, letterSpacing.toFloat(), path, paint)
+        if (strokeWidth > 0) {
+            paint.getTextPath(text.toString(), start, end, x + strokeWidth, y.toFloat(), path)
+            canvas.drawStroke(strokeWidth.toFloat(), strokeColor, letterSpacing.toFloat(), path, paint)
+        }
     }
 
     private fun Canvas.drawStroke(strokeWidth: Float, strokeColor: Int, letterSpacing: Float, path: Path, paint: Paint) {
