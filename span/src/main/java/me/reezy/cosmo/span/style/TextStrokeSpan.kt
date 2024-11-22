@@ -2,6 +2,8 @@ package me.reezy.cosmo.span.style
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
+import android.os.Build
 import android.text.style.ReplacementSpan
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
@@ -12,6 +14,8 @@ class TextStrokeSpan(
     @Dimension private val strokeWidth: Int,
     @Dimension private val letterSpacing: Int = 0,
 ) : ReplacementSpan() {
+
+    private val path = Path()
 
     override fun getSize(paint: Paint, text: CharSequence, start: Int, end: Int, fontMetrics: Paint.FontMetricsInt?): Int {
         if (fontMetrics != null && paint.fontMetricsInt != null) {
@@ -24,29 +28,40 @@ class TextStrokeSpan(
         return paint.measureText(text.toString().substring(start until end)).toInt() + strokeWidth * 2
     }
 
-
     override fun draw(canvas: Canvas, text: CharSequence, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {
 
-
-        val color = paint.color
-        val style = paint.style
-        val width = paint.strokeWidth
-        val spacing = paint.letterSpacing
-
-        paint.letterSpacing = letterSpacing / paint.textSize
-
-        paint.color = strokeColor
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = strokeWidth.toFloat() * 2
         canvas.drawText(text, start, end, x + strokeWidth, y.toFloat(), paint)
 
-        paint.color = color
-        paint.style = style
-        paint.strokeWidth = width
+        paint.getTextPath(text.toString(), start, end, x + strokeWidth, y.toFloat(), path)
 
-        canvas.drawText(text, start, end, x + strokeWidth, y.toFloat(), paint)
-
-        paint.letterSpacing = spacing
+        canvas.drawStroke(strokeWidth.toFloat(), strokeColor, letterSpacing.toFloat(), path, paint)
     }
 
+    private fun Canvas.drawStroke(strokeWidth: Float, strokeColor: Int, letterSpacing: Float, path: Path, paint: Paint) {
+        val color = paint.color
+        val width = paint.strokeWidth
+        val shader = paint.shader
+        val spacing = paint.letterSpacing
+
+        paint.color = strokeColor
+        paint.strokeWidth = strokeWidth * 2
+        paint.style = Paint.Style.STROKE
+        paint.shader = null
+        paint.letterSpacing = letterSpacing / paint.textSize
+
+        val saveCount = save()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            clipPath(path, android.graphics.Region.Op.DIFFERENCE)
+        } else {
+            clipOutPath(path)
+        }
+        drawPath(path, paint)
+        restoreToCount(saveCount)
+
+        paint.color = color
+        paint.strokeWidth = width
+        paint.style = Paint.Style.FILL
+        paint.shader = shader
+        paint.letterSpacing = spacing
+    }
 }
