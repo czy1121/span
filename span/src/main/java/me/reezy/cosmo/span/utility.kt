@@ -3,6 +3,7 @@
 package me.reezy.cosmo.span
 
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.text.Spannable
@@ -15,13 +16,15 @@ import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
 import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import me.reezy.cosmo.span.compat.TypefaceCompatSpan
 import me.reezy.cosmo.span.style.LabelSpan
 import me.reezy.cosmo.span.style.TextColorSpan
 import java.util.regex.Pattern
 
 
-fun CharSequence.setStyle(regex: String? = null, spansBuilder: SpannableStringBuilder.() -> Array<CharacterStyle>): Spanned {
+
+fun CharSequence.setTextStyle(regex: String? = null, spansBuilder: SpannableStringBuilder.() -> Array<CharacterStyle>): Spanned {
     val s = SpannableStringBuilder(this)
     if (regex != null) {
         val m = Pattern.compile(regex).matcher(this)
@@ -42,7 +45,7 @@ fun CharSequence.setStyle(regex: String? = null, spansBuilder: SpannableStringBu
     return s
 }
 
-fun CharSequence.setStyle(vararg spans: CharacterStyle): Spanned {
+fun CharSequence.setTextStyle(vararg spans: CharacterStyle): Spanned {
     val s = SpannableStringBuilder(this)
     for (span in spans) {
         s.setSpan(span, 0, length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
@@ -50,7 +53,7 @@ fun CharSequence.setStyle(vararg spans: CharacterStyle): Spanned {
     return s
 }
 
-fun CharSequence.setStyle(regex: String? = null, scale: Float? = null, color: Int? = null, size: Int? = null, typeface: Typeface? = null, style: Int? = null, bgColor: Int? = null) = setStyle(regex) {
+fun CharSequence.setTextStyle(regex: String? = null, scale: Float? = null, color: Int? = null, size: Int? = null, typeface: Typeface? = null, style: Int? = null, bgColor: Int? = null) = setTextStyle(regex) {
     val spans = mutableListOf<CharacterStyle>()
     color?.let {
         spans.add(TextColorSpan(it))
@@ -84,8 +87,13 @@ fun CharSequence.setStyle(regex: String? = null, scale: Float? = null, color: In
 }
 
 inline fun CharSequence.setNumberStyle(scale: Float? = null, color: Int? = null, size: Int? = null, typeface: Typeface? = null, style: Int? = null, bgColor: Int? = null) =
-    setStyle("[+-]?[0-9]+(\\.[0-9]+)*[%]?", scale, color, size, typeface, style, bgColor)
+    setTextStyle("[+-]?[0-9]+(\\.[0-9]+)*[%]?", scale, color, size, typeface, style, bgColor)
 
+fun CharSequence.setStrokeStyle(color: Int = Color.BLACK, width: Int = 1f.dp, letterSpacing: Int = 0) = buildSpannedString {
+    inSpans(stroke(color, width, letterSpacing)) {
+        append(this@setStrokeStyle)
+    }
+}
 
 inline fun List<String>.setLabelStyle(colors: List<Int>, height: Int, corner: Int = -1, padding: Int = 3f.dp, spacing: Int = 3f.dp, stroke: Int = 0) = buildSpannedString {
     for ((index, text) in this@setLabelStyle.withIndex()) {
@@ -96,6 +104,21 @@ inline fun List<String>.setLabelStyle(colors: List<Int>, height: Int, corner: In
 inline fun List<String>.setLabelStyle(color: Int, height: Int, corner: Int = -1, padding: Int = 3f.dp, spacing: Int = 3f.dp, stroke: Int = 0) =
     setLabelStyle(listOf(color), height, corner, padding, spacing, stroke)
 
+
+@Deprecated("使用 setTextStyle 替代", ReplaceWith("setTextStyle(regex, spansBuilder)"))
+inline fun CharSequence.setStyle(regex: String? = null, noinline spansBuilder: SpannableStringBuilder.() -> Array<CharacterStyle>): Spanned {
+    return setTextStyle(regex, spansBuilder)
+}
+
+@Deprecated("使用 setTextStyle 替代", ReplaceWith("setTextStyle(spans)"))
+inline fun CharSequence.setStyle(vararg spans: CharacterStyle): Spanned {
+    return setTextStyle(*spans)
+}
+
+@Deprecated("使用 setTextStyle 替代", ReplaceWith("setTextStyle(regex, scale, color, size, typeface, style, bgColor)"))
+inline fun CharSequence.setStyle(regex: String? = null, scale: Float? = null, color: Int? = null, size: Int? = null, typeface: Typeface? = null, style: Int? = null, bgColor: Int? = null): Spanned {
+    return setTextStyle(regex, scale, color, size, typeface, style, bgColor)
+}
 
 @PublishedApi
 internal val Float.dp: Int get() = (Resources.getSystem().displayMetrics.density * this).toInt()

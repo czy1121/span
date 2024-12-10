@@ -17,7 +17,7 @@ import me.reezy.cosmo.span.lineHeight
 import me.reezy.cosmo.span.scale
 import me.reezy.cosmo.span.setLabelStyle
 import me.reezy.cosmo.span.setNumberStyle
-import me.reezy.cosmo.span.setStyle
+import me.reezy.cosmo.span.setTextStyle
 import me.reezy.cosmo.span.size
 import me.reezy.cosmo.span.style.Text3dSpan
 import me.reezy.cosmo.span.style.TextStrokeSpan
@@ -70,7 +70,7 @@ class CustomFragment : Fragment(R.layout.fragment_text) {
             }
 
             block(lineHeight(40f.dp)) {
-                append("一二三123%".setStyle(color = Color.RED, size = 12f.dp).setNumberStyle(typeface = wiguru2, size = 18f.dp, color = Color.CYAN))
+                append("一二三123%".setTextStyle(color = Color.RED, size = 12f.dp).setNumberStyle(typeface = wiguru2, size = 18f.dp, color = Color.CYAN))
 
             }
         }

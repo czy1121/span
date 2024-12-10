@@ -26,13 +26,15 @@
   - `TextColorSpan`，解决 `ForegroundColorSpan` 与其它有些样式共用时会失效的问题
 - 提供多种为文本快捷设置样式的方法
   - **为文本设置样式**  
-    `CharSequence.setStyle(spans)`
+    `CharSequence.setTextStyle(spans)`
   - **为文本中匹配正则表达式(regex)的部分设置样式**  
-    `CharSequence.setStyle(regex) { arrayOf(spans) }`
+    `CharSequence.setTextStyle(regex) { arrayOf(spans) }`
   - **为文本中匹配正则表达式(regex)的部分设置样式**  
-    `CharSequence.setStyle(regex, scale, color，size, typeface, style, bgColor)` 
+    `CharSequence.setTextStyle(regex, scale, color，size, typeface, style, bgColor)` 
   - **为文本中的数字设置样式**  
     `CharSequence.setNumberStyle(scale, color，size, typeface, style, bgColor)`
+  - **为文本设置描边**  
+    `CharSequence.setStrokeStyle(strokeColor, strokeWidth, letterSpacing)`
   - **为文本列表设置标签样式**  
     `List<String>.setLabelStyle(colors, height，corner, padding, spacing, stroke)`
 
