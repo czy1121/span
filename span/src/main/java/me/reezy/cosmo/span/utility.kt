@@ -105,20 +105,6 @@ inline fun List<String>.setLabelStyle(color: Int, height: Int, corner: Int = -1,
     setLabelStyle(listOf(color), height, corner, padding, spacing, stroke)
 
 
-@Deprecated("使用 setTextStyle 替代", ReplaceWith("setTextStyle(regex, spansBuilder)"))
-inline fun CharSequence.setStyle(regex: String? = null, noinline spansBuilder: SpannableStringBuilder.() -> Array<CharacterStyle>): Spanned {
-    return setTextStyle(regex, spansBuilder)
-}
-
-@Deprecated("使用 setTextStyle 替代", ReplaceWith("setTextStyle(spans)"))
-inline fun CharSequence.setStyle(vararg spans: CharacterStyle): Spanned {
-    return setTextStyle(*spans)
-}
-
-@Deprecated("使用 setTextStyle 替代", ReplaceWith("setTextStyle(regex, scale, color, size, typeface, style, bgColor)"))
-inline fun CharSequence.setStyle(regex: String? = null, scale: Float? = null, color: Int? = null, size: Int? = null, typeface: Typeface? = null, style: Int? = null, bgColor: Int? = null): Spanned {
-    return setTextStyle(regex, scale, color, size, typeface, style, bgColor)
-}
 
 @PublishedApi
 internal val Float.dp: Int get() = (Resources.getSystem().displayMetrics.density * this).toInt()
