@@ -51,7 +51,7 @@ inline fun SpannableStringBuilder.typeface(typeface: Typeface) = if (Build.VERSI
     TypefaceCompatSpan(typeface)
 }
 
-inline fun SpannableStringBuilder.stroke(color: Int = Color.BLACK, width: Int = 1f.dp, letterSpacing: Int = 0) = TextStrokeSpan(color, width, letterSpacing)
+inline fun SpannableStringBuilder.stroke(color: Int = Color.BLACK, width: Int = 1f.dp, letterSpacing: Int = 0f.dp) = TextStrokeSpan(color, width, letterSpacing)
 
 inline fun SpannableStringBuilder.clickable(crossinline action: () -> Unit) = object : ClickableSpan() {
     override fun onClick(widget: View) {

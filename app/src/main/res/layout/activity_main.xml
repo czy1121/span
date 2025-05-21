@@ -7,14 +7,12 @@
     android:orientation="vertical"
     tools:context="com.demo.app.MainActivity">
 
-    <com.google.android.material.tabs.TabLayout
+    <me.reezy.cosmo.tablayout.CustomTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#eee"
         android:paddingTop="5dp"
-        app:tabBackground="@null"
-        app:tabContentStart="0dp"
         app:tabGravity="start"
         app:tabIndicator="@drawable/tab_indicator"
         app:tabIndicatorAnimationMode="linear"
@@ -25,8 +23,11 @@
         app:tabMinWidth="40dp"
         app:tabMode="scrollable"
         app:tabRippleColor="@null"
+        app:tabTextSize="14sp"
+        app:tabSelectedTextSize="18sp"
         app:tabSelectedTextColor="#000"
-        app:tabTextColor="#aaa" />
+        app:tabTextColor="#aaa"
+        app:tabTextStyle="bold"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"

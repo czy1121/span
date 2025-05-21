@@ -41,7 +41,7 @@ class CustomFragment : Fragment(R.layout.fragment_text) {
                 append("Text3dSpan 12345678990")
             }
             br()
-            inSpans(TextStrokeSpan(Color.RED, 1f.dp)) {
+            inSpans(TextStrokeSpan(Color.RED, 2f.dp)) {
                 append("TextStrokeSpan 1234\n5678990")
             }
             br()
@@ -65,7 +65,7 @@ class CustomFragment : Fragment(R.layout.fragment_text) {
             br()
             br()
 
-            inSpans(TextStrokeSpan((0xa0ffffff).toInt(), 1f.dp, 1f.dp), color(0x7000ff00), size(28f.dp), typeface(wiguru2)) {
+            inSpans(TextStrokeSpan((0xa0ffffff).toInt(), 1f.dp), color(0x7000ff00), size(28f.dp), typeface(wiguru2)) {
                 append("11223344556677889900")
             }
 

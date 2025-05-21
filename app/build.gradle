@@ -6,5 +6,5 @@ dependencies {
 
     implementation project(":span")
 
-    implementation 'me.reezy.cosmo:tabs:0.8.0'
+    implementation 'me.reezy.cosmo:tablayout:0.10.8'
 }
